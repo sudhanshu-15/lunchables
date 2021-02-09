@@ -24,3 +24,23 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    configuration = [
+            compileSdkVersion: 30,
+            minSdkVersion: 23,
+            targetSdkVersion: 30,
+    ]
+
+    libraries = [
+            constraintLayout: "2.0.4",
+            material: "1.2.1",
+            appcompat: "1.2.0",
+            corektx: "1.3.2",
+            livedata: "2.2.0",
+            viewmodel: "2.2.0",
+            playservices: "17.0.0",
+            junitext: "1.1.1",
+            espresso: "3.3.0"
+    ]
+}
