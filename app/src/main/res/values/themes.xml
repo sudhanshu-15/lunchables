@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Lunchables" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/alt_green</item>
+        <item name="colorOnPrimary">@color/alt_primary_grey</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/alt_primary_grey</item>
+        <item name="colorSecondaryVariant">@color/alt_secondary_grey</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customized values -->
+    </style>
+
+    <style name="TextInputLayoutThemeOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/alt_green</item>
+        <item name="colorControlActivated">@color/alt_green</item>
+    </style>
+</resources>
