@@ -48,8 +48,10 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${libraries.constraintLayout}"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${libraries.livedata}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${libraries.viewmodel}"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libraries.livedata}"
     implementation "com.google.android.gms:play-services-maps:${libraries.playservices}"
     implementation "com.google.android.gms:play-services-location:${libraries.playservices}"
+    implementation "com.github.quickpermissions:quickpermissions-kotlin:${libraries.quickperm}"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:${libraries.junitext}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${libraries.espresso}"
