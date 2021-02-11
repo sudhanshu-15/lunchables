@@ -60,6 +60,9 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:${libraries.koin}"
     implementation "org.koin:koin-androidx-viewmodel:${libraries.koin}"
     implementation "org.koin:koin-androidx-fragment:${libraries.koin}"
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:${libraries.retrofit}"
+    implementation "com.squareup.retrofit2:converter-moshi:${libraries.retrofit}"
     // Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:${libraries.junitext}"
