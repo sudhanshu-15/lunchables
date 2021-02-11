@@ -41,17 +41,26 @@ android {
 
 dependencies {
 
+    // Required
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:${libraries.corektx}"
     implementation "androidx.appcompat:appcompat:${libraries.appcompat}"
     implementation "com.google.android.material:material:${libraries.material}"
     implementation "androidx.constraintlayout:constraintlayout:${libraries.constraintLayout}"
+    // Lifecycle
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:${libraries.livedata}"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${libraries.viewmodel}"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:${libraries.livedata}"
+    // Playservices
     implementation "com.google.android.gms:play-services-maps:${libraries.playservices}"
     implementation "com.google.android.gms:play-services-location:${libraries.playservices}"
+    // QuickPermission
     implementation "com.github.quickpermissions:quickpermissions-kotlin:${libraries.quickperm}"
+    // Koin DI
+    implementation "org.koin:koin-androidx-scope:${libraries.koin}"
+    implementation "org.koin:koin-androidx-viewmodel:${libraries.koin}"
+    implementation "org.koin:koin-androidx-fragment:${libraries.koin}"
+    // Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:${libraries.junitext}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${libraries.espresso}"
