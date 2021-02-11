@@ -1,12 +1,12 @@
 package me.ssiddh.lunchables.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import me.ssiddh.lunchables.R
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ListResultFragment : Fragment() {
 
@@ -14,7 +14,7 @@ class ListResultFragment : Fragment() {
         fun newInstance() = ListResultFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,6 @@ class ListResultFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         // TODO: Use the ViewModel
     }
 }

@@ -11,6 +11,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
@@ -22,19 +23,21 @@ import me.ssiddh.lunchables.ui.main.MapsFragment
 import me.ssiddh.lunchables.utils.UIStates
 import me.ssiddh.lunchables.utils.awaitLastLocation
 import me.ssiddh.lunchables.utils.viewBinding
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(MainActivityBinding::inflate)
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModel()
+
+    private val fusedLocationProviderClient: FusedLocationProviderClient by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setActionBar(binding.myToolbar)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         viewModel.uiState.observe(this, Observer { uiState ->
             updateButtonState(uiState)
@@ -73,8 +76,6 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingPermission")
     private fun requestPermissions() =
         runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
-            val fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(this)
             lifecycleScope.launch {
                 val lastLocation = fusedLocationProviderClient.awaitLastLocation()
                 Log.d(
