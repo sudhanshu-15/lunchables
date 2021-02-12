@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 def configuration = rootProject.ext.configuration
@@ -63,6 +64,10 @@ dependencies {
     // Networking
     implementation "com.squareup.retrofit2:retrofit:${libraries.retrofit}"
     implementation "com.squareup.retrofit2:converter-moshi:${libraries.retrofit}"
+
+    // Moshi
+    implementation("com.squareup.moshi:moshi-kotlin:1.11.0")
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.11.0")
     // Test
     testImplementation 'junit:junit:4.+'
     androidTestImplementation "androidx.test.ext:junit:${libraries.junitext}"
