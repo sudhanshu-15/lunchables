@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
                     "SSLOG",
                     "Last location ${lastLocation.latitude} ${lastLocation.longitude}"
                 )
+                viewModel.getNearByRestaurants(lastLocation)
             }
         }
 
