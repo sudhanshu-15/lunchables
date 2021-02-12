@@ -12,7 +12,7 @@ val fusedLocationProviderClientModule = module {
 }
 
 val mainViewModelModule = module {
-    viewModel { MainViewModel() }
+    viewModel { MainViewModel(get()) }
 }
 
 private fun provideFusedLocationProviderClient(context: Context) =
