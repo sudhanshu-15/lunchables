@@ -10,11 +10,15 @@ class RestaurantSearchRepository(
 
     suspend fun getNearByRestaurants(
         location: Location,
-        searchQueryText: String?
+        searchQueryText: String?,
+        type: String = "restaurant",
+        radius: Int = 1500
     ): SearchResults {
         return apiService.getNearByPlaces(
             location = "${location.latitude},${location.longitude}",
-            keyword = searchQueryText
+            keyword = searchQueryText,
+            type = type,
+            radius = radius
         )
     }
 }
