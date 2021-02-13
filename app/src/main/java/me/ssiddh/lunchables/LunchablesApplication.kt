@@ -2,6 +2,7 @@ package me.ssiddh.lunchables
 
 import android.app.Application
 import me.ssiddh.lunchables.di.apiModule
+import me.ssiddh.lunchables.di.databaseModule
 import me.ssiddh.lunchables.di.fusedLocationProviderClientModule
 import me.ssiddh.lunchables.di.mainViewModelModule
 import me.ssiddh.lunchables.di.networkModule
@@ -21,7 +22,8 @@ class LunchablesApplication : Application() {
                     mainViewModelModule,
                     repositoryModule,
                     networkModule,
-                    apiModule
+                    apiModule,
+                    databaseModule
                 )
             )
         }
