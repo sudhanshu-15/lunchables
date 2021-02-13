@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SearchResults(
+data class SearchApiResponse(
     @field:Json(name = "status")
     val status: Status,
     @field:Json(name = "results")
