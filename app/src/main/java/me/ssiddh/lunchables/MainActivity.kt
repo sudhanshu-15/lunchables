@@ -2,19 +2,16 @@ package me.ssiddh.lunchables
 
 import android.Manifest
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
-import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
 import kotlinx.coroutines.launch
 import me.ssiddh.lunchables.databinding.MainActivityBinding
 import me.ssiddh.lunchables.ui.main.ListResultFragment
@@ -39,27 +36,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setActionBar(binding.myToolbar)
 
-        viewModel.uiState.observe(this, Observer { uiState ->
-            updateButtonState(uiState)
-            when (uiState) {
-                UIStates.ListUIState -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, ListResultFragment.newInstance())
-                        .commit()
-                }
-                UIStates.MapUIState -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MapsFragment.newInstance())
-                        .commit()
-                }
-                UIStates.NoLocationUIState -> {
-
-                }
-                UIStates.ErrorLoadingUIState -> {
-
+        viewModel.uiState.observe(
+            this,
+            Observer { uiState ->
+                updateButtonState(uiState)
+                when (uiState) {
+                    UIStates.ListUIState -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, ListResultFragment.newInstance())
+                            .commit()
+                    }
+                    UIStates.MapUIState -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, MapsFragment.newInstance())
+                            .commit()
+                    }
+                    UIStates.NoLocationUIState -> {
+                    }
+                    UIStates.ErrorLoadingUIState -> {
+                    }
                 }
             }
-        })
+        )
 
         binding.buttonSwitchResult.setOnClickListener {
             viewModel.switchResultView()
@@ -70,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         requestPermissions()
-
     }
 
     @SuppressLint("MissingPermission")

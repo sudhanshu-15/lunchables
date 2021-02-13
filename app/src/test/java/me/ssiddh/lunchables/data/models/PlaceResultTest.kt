@@ -109,5 +109,4 @@ class PlaceResultTest {
     fun `Should result in exception when invalid json`() {
         val placeResult = jsonAdapter.fromJson(invalidPlaceResult)
     }
-
 }
