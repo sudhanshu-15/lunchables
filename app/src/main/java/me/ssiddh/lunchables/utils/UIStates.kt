@@ -17,8 +17,4 @@ sealed class UIStates {
         override val stringResId: Int = R.string.list
         override val iconResId: Int = R.drawable.ic_list
     }
-    object ErrorLoadingUIState : UIStates() {
-        override val stringResId: Int = R.string.list
-        override val iconResId: Int = R.drawable.ic_list
-    }
 }
