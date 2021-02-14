@@ -5,4 +5,11 @@
     <string name="cd_search">Search</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="place_image">place image</string>
+    <string name="fav_button">Fav Button</string>
+    <string name="no_result_cache">We couldn\'t find what you were looking for, but here are you favorites</string>
+    <string name="error_searching">We hit an error finding your place, but here are you favorites</string>
+    <string name="unknown_error">We hit a snag. Please try again</string>
+    <string name="ok">OK</string>
+    <string name="no_permissions">This app requires Location permission to work.</string>
 </resources>
