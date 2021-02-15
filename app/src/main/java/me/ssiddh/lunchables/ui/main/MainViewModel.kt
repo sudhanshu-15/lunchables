@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.ssiddh.lunchables.data.repository.RestaurantSearchRepository
-import me.ssiddh.lunchables.network.GooglePlacesApiService
 import me.ssiddh.lunchables.utils.UIStates
 
 class MainViewModel(
