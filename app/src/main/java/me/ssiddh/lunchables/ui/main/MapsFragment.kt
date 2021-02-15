@@ -16,10 +16,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import me.ssiddh.lunchables.R
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class MapsFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by sharedViewModel()
 
     private lateinit var map: GoogleMap
 
@@ -59,7 +60,6 @@ class MapsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         Log.d("SSLOG", "onActivityCreated")
     }
 
