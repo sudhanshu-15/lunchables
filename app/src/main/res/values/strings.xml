@@ -3,4 +3,6 @@
     <string name="filter">Filter</string>
     <string name="search_for_a_restaurant">Search for a restaurant</string>
     <string name="cd_search">Search</string>
+    <string name="list">List</string>
+    <string name="map">Map</string>
 </resources>
