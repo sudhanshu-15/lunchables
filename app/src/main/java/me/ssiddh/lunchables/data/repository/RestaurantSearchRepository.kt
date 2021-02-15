@@ -1,11 +1,13 @@
 package me.ssiddh.lunchables.data.repository
 
 import android.location.Location
-import me.ssiddh.lunchables.data.models.SearchResults
+import me.ssiddh.lunchables.data.cache.dao.SearchResultDao
+import me.ssiddh.lunchables.data.models.SearchApiResponse
 import me.ssiddh.lunchables.network.GooglePlacesApiService
 
 class RestaurantSearchRepository(
-    private val apiService: GooglePlacesApiService
+    private val apiService: GooglePlacesApiService,
+    private val searchResultDao: SearchResultDao
 ) {
 
     suspend fun getNearByRestaurants(
@@ -13,7 +15,7 @@ class RestaurantSearchRepository(
         searchQueryText: String?,
         type: String = "restaurant",
         radius: Int = 1500
-    ): SearchResults {
+    ): SearchApiResponse {
         return apiService.getNearByPlaces(
             location = "${location.latitude},${location.longitude}",
             keyword = searchQueryText,

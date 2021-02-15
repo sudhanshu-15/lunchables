@@ -4,6 +4,7 @@ import android.app.Application
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import me.ssiddh.lunchables.R
+import me.ssiddh.lunchables.data.cache.dao.SearchResultDao
 import me.ssiddh.lunchables.data.repository.RestaurantSearchRepository
 import me.ssiddh.lunchables.network.GooglePlacesApiService
 import me.ssiddh.lunchables.utils.AuthenticationInterceptor
@@ -23,10 +24,12 @@ val apiModule = module {
 }
 
 val repositoryModule = module {
-    fun provideSearchRepository(googlePlacesApiService: GooglePlacesApiService) =
-        RestaurantSearchRepository(googlePlacesApiService)
+    fun provideSearchRepository(
+        googlePlacesApiService: GooglePlacesApiService,
+        searchResultDao: SearchResultDao
+    ) = RestaurantSearchRepository(googlePlacesApiService, searchResultDao)
 
-    single { provideSearchRepository(get()) }
+    single { provideSearchRepository(get(), get()) }
 }
 
 val networkModule = module {
@@ -49,7 +52,7 @@ val networkModule = module {
             .build()
     }
 
-    fun providerMoshi(): Moshi =
+    fun provideMoshi(): Moshi =
         Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
     fun provideRetrofit(moshi: Moshi, httpClient: OkHttpClient): Retrofit = Retrofit.Builder()
@@ -61,6 +64,6 @@ val networkModule = module {
     single { provideCache(androidApplication()) }
     single { provideAuthenticationInterceptor(androidApplication()) }
     single { provideHttpClient(get(), get()) }
-    single { providerMoshi() }
+    single { provideMoshi() }
     single { provideRetrofit(get(), get()) }
 }
