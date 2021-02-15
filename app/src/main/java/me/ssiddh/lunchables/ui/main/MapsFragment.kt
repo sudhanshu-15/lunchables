@@ -1,19 +1,29 @@
 package me.ssiddh.lunchables.ui.main
 
+import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.MarkerOptions
 import me.ssiddh.lunchables.R
+import me.ssiddh.lunchables.data.models.SearchResult
+import me.ssiddh.lunchables.ui.adapters.CustomInfoWindowAdapter
+import me.ssiddh.lunchables.utils.SearchResultStates
+import me.ssiddh.lunchables.utils.toBitmap
+import me.ssiddh.lunchables.utils.toLatLng
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
+private const val ZOOM_LEVEL = 14F
 
 class MapsFragment : Fragment() {
 
@@ -21,20 +31,37 @@ class MapsFragment : Fragment() {
 
     private lateinit var map: GoogleMap
 
+    private var markerBitmap: Bitmap? = null
+
+    @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
         map = googleMap
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        googleMap.setInfoWindowAdapter(CustomInfoWindowAdapter(requireContext()))
+        viewModel.locationLiveData.observe(
+            viewLifecycleOwner,
+            Observer {
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(it, ZOOM_LEVEL))
+            }
+        )
+        viewModel.searchResultState.observe(
+            viewLifecycleOwner,
+            Observer { searchResultState ->
+                when (searchResultState) {
+                    is SearchResultStates.FoundPlaceResults -> {
+                        addMarkersToMap(searchResultState.searchResults)
+                    }
+                    is SearchResultStates.NoResultsButCache -> {
+                        addMarkersToMap(searchResultState.searchResults)
+                    }
+                    is SearchResultStates.ErrorWhileSearching -> {
+                        addMarkersToMap(searchResultState.searchResults)
+                    }
+                    else -> {
+                        Log.d("SSLOG", "Faced an error")
+                    }
+                }
+            }
+        )
     }
 
     override fun onCreateView(
@@ -57,7 +84,21 @@ class MapsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("SSLOG", "onActivityCreated")
+        markerBitmap = R.drawable.ic_map_marker.toBitmap(requireContext())
+    }
+
+    private fun addMarkersToMap(searchResults: List<SearchResult>) {
+        map.clear()
+        searchResults.forEach { searchResult ->
+            val latLng = searchResult.placeInfo.geometry.toLatLng()
+            val markerOptions = MarkerOptions()
+                .position(latLng)
+                .title(searchResult.placeInfo.name)
+                .snippet("Ratings: ${searchResult.placeInfo.rating} Price:${searchResult.placeInfo.priceLevel}")
+            markerBitmap?.let { markerOptions.icon(BitmapDescriptorFactory.fromBitmap(it)) }
+            val marker = map.addMarker(markerOptions)
+            marker.tag = searchResult.placeInfo
+        }
     }
 
     companion object {

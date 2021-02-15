@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="hint_text_text_size">14sp</dimen>
+    <dimen name="card_place_name">16sp</dimen>
+    <dimen name="map_info_card_radius">8dp</dimen>
 </resources>
