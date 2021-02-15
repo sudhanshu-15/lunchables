@@ -1,17 +1,26 @@
 package me.ssiddh.lunchables
 
+import android.Manifest
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.LocationServices
+import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
+import com.livinglifetechway.quickpermissions_kotlin.util.QuickPermissionsOptions
+import kotlinx.coroutines.launch
 import me.ssiddh.lunchables.databinding.MainActivityBinding
 import me.ssiddh.lunchables.ui.main.ListResultFragment
 import me.ssiddh.lunchables.ui.main.MainViewModel
 import me.ssiddh.lunchables.ui.main.MapsFragment
 import me.ssiddh.lunchables.utils.UIStates
+import me.ssiddh.lunchables.utils.awaitLastLocation
 import me.ssiddh.lunchables.utils.viewBinding
 
 class MainActivity : AppCompatActivity() {
@@ -57,7 +66,23 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Search Clicked", Toast.LENGTH_LONG).show()
         }
 
+        requestPermissions()
+
     }
+
+    @SuppressLint("MissingPermission")
+    private fun requestPermissions() =
+        runWithPermissions(Manifest.permission.ACCESS_FINE_LOCATION) {
+            val fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(this)
+            lifecycleScope.launch {
+                val lastLocation = fusedLocationProviderClient.awaitLastLocation()
+                Log.d(
+                    "SSLOG",
+                    "Last location ${lastLocation.latitude} ${lastLocation.longitude}"
+                )
+            }
+        }
 
     private fun updateButtonState(uiState: UIStates) {
         binding.buttonSwitchResult.apply {
